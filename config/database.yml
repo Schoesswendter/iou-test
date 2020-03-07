@@ -20,6 +20,8 @@ test:
   database: iou_test
   pool: 5
   timeout: 5000
+  username: postgres
+  password: postgres
 
 
 production:
