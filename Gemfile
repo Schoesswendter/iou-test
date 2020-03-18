@@ -13,7 +13,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'jbuilder', '~> 2.7'
 gem 'mdl_form', github: 'bjelline/rails-mdl-form'
 gem 'pg'
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 4.3'
 gem 'rswag-api'
 gem 'rswag-ui'
 gem 'turbolinks', '~> 5'
