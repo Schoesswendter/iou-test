@@ -18,12 +18,20 @@ class Api::V1::UsersController < Api::V1::BaseController
 
         respond_to do |format|
             if @user.save
-                format.html { redirect_to @user, notice: 'User was successfully created.' }
-                format.json { render :show, status: :created, location: @user }
+                render json: UserSerializer.new(@user).serialized_json, status: 201
             else
-                format.html { render :new }
                 format.json { render json: @user.errors, status: :unprocessable_entity }
             end
         end
     end
+
+    def register_user_params
+        p = params.require(:data).permit(:type, attributes: %i[name email password])
+        
+        if p[:type] == 'user'
+           p[:attributes] 
+        else
+          nil
+        end
+    end    
   end
