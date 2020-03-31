@@ -11,9 +11,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
    
     def show
-      user = User.find(params[:id])
-   
-      render json: UserSerializer.new(user).serialized_json
+      render json: UserSerializer.new(@user).serialized_json
     end
 
     def update
@@ -30,7 +28,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
 
     def set_user
-        @user = user.find(params[:id])
+        @user = User.find(params[:id])
     end
 
     def create
