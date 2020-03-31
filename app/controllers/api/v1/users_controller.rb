@@ -12,4 +12,18 @@ class Api::V1::UsersController < Api::V1::BaseController
    
       render json: UserSerializer.new(user).serialized_json
     end
+
+    def create
+        @user = User.new(register_user_params)
+
+        respond_to do |format|
+            if @user.save
+                redirect_to @user, notice: 'User was successfully created.' 
+                render :show, status: :created, location: @user 
+            else
+                render :new 
+                render json: @user.errors, status: :unprocessable_entity 
+            end
+        end
+    end
   end
