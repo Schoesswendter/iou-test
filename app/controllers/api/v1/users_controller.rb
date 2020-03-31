@@ -34,12 +34,10 @@ class Api::V1::UsersController < Api::V1::BaseController
     def create
         @user = User.new(user_params)
 
-        respond_to do |format|
-            if @user.save
-                render json: UserSerializer.new(@user).serializable_hash.to_json, status: 201
-            else
-                render json: @user.errors, status: 422
-            end
+        if @user.save
+            render status: 201, json: UserSerializer.new(@user).serializable_hash.to_json
+        else
+            render json: @user.errors, status: 422
         end
     end
 
