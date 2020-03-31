@@ -3,6 +3,7 @@
 class Api::V1::UsersController < Api::V1::BaseController
     before_action :set_user, only: %i[show update destroy]
     before_action :user_params, only: %i[create]
+
     def index
       users = User.all
    
@@ -15,7 +16,6 @@ class Api::V1::UsersController < Api::V1::BaseController
       render json: UserSerializer.new(user).serialized_json
     end
 
-      # app/controllers/api/v1/users_controller.rb
     def update
         set_user
         if @user.update(user_params)
@@ -26,9 +26,8 @@ class Api::V1::UsersController < Api::V1::BaseController
         end
     end
 
-    # Parse JSON-Api data:
-  # {"data"=>{"type"=>"user",
-  #           "attributes"=>{"name"=>"Good", "email"=>"good@hier.com", "password"=>"[FILTERED]"}}
+    def destroy
+    end
 
     def set_user
         @user = user.find(params[:id])
