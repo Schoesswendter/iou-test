@@ -21,7 +21,7 @@ class Api::V1::UsersController < Api::V1::BaseController
             if @user.save
                 render json: UserSerializer.new(@user).serialized_json, status: 201
             else
-                render json: { errors: ErrorSerializer.new(@user).serialized_json }, status: 422
+                render json: @user.errors, status: 422
             end
         end
     end
