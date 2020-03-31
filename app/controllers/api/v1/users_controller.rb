@@ -1,6 +1,7 @@
 # app/controllers/api/v1/users_controller.rb
  
 class Api::V1::UsersController < Api::V1::BaseController
+    before_action :set_user, only: %i[show update destroy]
     before_action :user_params, only: %i[create]
     def index
       users = User.all
@@ -14,12 +15,31 @@ class Api::V1::UsersController < Api::V1::BaseController
       render json: UserSerializer.new(user).serialized_json
     end
 
+      # app/controllers/api/v1/users_controller.rb
+    def update
+        set_user
+        if @user.update(user_params)
+        render status: :ok, json: UserSerializer.new(@user).serializable_hash.to_json
+        else
+        render json: @user.errors, status: 422  # einfacher error
+        # render_api_error(@user.errors, 422)   # richtiger json-api error, muss man selber implementieren
+        end
+    end
+
+    # Parse JSON-Api data:
+  # {"data"=>{"type"=>"user",
+  #           "attributes"=>{"name"=>"Good", "email"=>"good@hier.com", "password"=>"[FILTERED]"}}
+
+    def set_user
+        @user = user.find(params[:id])
+    end
+
     def create
         @user = User.new(user_params)
 
         respond_to do |format|
             if @user.save
-                render json: UserSerializer.new(@user).serialized_json, status: 201
+                render json: UserSerializer.new(@user).serializable_hash.to_json, status: 201
             else
                 render json: @user.errors, status: 422
             end

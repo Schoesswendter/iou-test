@@ -111,28 +111,3 @@ end
       end
     end
   end
-
-  # app/controllers/api/v1/users_controller.rb
-  def update
-    set_user
-    if @user.update(user_params)
-      render status: :ok, json: UserSerializer.new(@user).serializable_hash.to_json
-    else
-      render json: @user.errors, status: 422  # einfacher error
-      # render_api_error(@user.errors, 422)   # richtiger json-api error, muss man selber implementieren
-    end
-  end
-
-    # Parse JSON-Api data:
-  # {"data"=>{"type"=>"user",
-  #           "attributes"=>{"name"=>"Good", "email"=>"good@hier.com", "password"=>"[FILTERED]"}}
-  def user_params
-    p = params.require(:data).permit(:type, attributes: %i[name email password])
-    
-    if p[:type] == 'user'
-       p[:attributes] 
-    else
-      nil
-    end
-  end
-
