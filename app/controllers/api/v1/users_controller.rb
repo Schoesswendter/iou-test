@@ -18,11 +18,11 @@ class Api::V1::UsersController < Api::V1::BaseController
 
         respond_to do |format|
             if @user.save
-                redirect_to @user, notice: 'User was successfully created.' 
-                render :show, status: :created, location: @user 
+                format.html { redirect_to @user, notice: 'User was successfully created.' }
+                format.json { render :show, status: :created, location: @user }
             else
-                render :new 
-                render json: @user.errors, status: :unprocessable_entity 
+                format.html { render :new }
+                format.json { render json: @user.errors, status: :unprocessable_entity }
             end
         end
     end
