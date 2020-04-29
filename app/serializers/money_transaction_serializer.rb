@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 class MoneyTransactionSerializer
     include FastJsonapi::ObjectSerializer
-    attributes :creditor_id, :debitor_id, :amount, :paid_at
-end
+    attributes :amount, :paid_at
+    belongs_to :creditor, redord_type: :user
+    belongs_to :debitor, redord_type: :user
+  end
   
